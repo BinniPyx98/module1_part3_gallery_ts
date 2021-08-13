@@ -1,90 +1,96 @@
-let successfullyAccess = false
-
-
- async function LogIn() {
+async function LogIn() {
+    let result = await control_validation_authorization()
     
-    let authForm = document.getElementById('form')
-    
-    let userPassword = document.getElementById('pass')
-    let userEmail = document.getElementById('email')
-    let validation = validator(userEmail.value, userPassword.value)
-    
-      if (validation) {
-        let userData = {
-            email: userEmail.value,
-            password: userPassword.value
-        }
-        
-        let userJsonDate = JSON.stringify(userData)
-      successfullyAccess= await authorization(userJsonDate)
-        if (successfullyAccess) {
-            authForm.classList.add('hidden')
-
-            let script = document.createElement('script')
-            script.src = "gallery/get_gallery.js"
-            document.getElementsByTagName('head')[0].appendChild(script);
-
-        } else {
-            authForm.classList.add('visible')
-        }
-    } else {
-        alert('некорректные данные')
+    if (result) {
+        hidden_auth_form()
+        get_gallery()
     }
-   
-    setTimeout(removeToken, 3000)
     
+    setTimeout(reset_authorization, 3000)
 }
 
-  function authorization(userJsonDate) {
-   
-    let start =  fetch('https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/login', {
+function authorization(userEmail, userPassword) {
+    let userJsonDate = JSON.stringify({
+        email: userEmail,
+        password: userPassword
+    })
+    let response = fetch('https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: userJsonDate
     })
-   return   start.then(data => {
+    
+    return response.then(data => {
         if (data.status === 200) {
-           return  data.json().then(data => {
+            return data.json().then(data => {
                 saveToken(data)
-                doSome(true)
                 return true
             })
         } else {
             alert(`Error, status:${data.status}`)
-            doSome(false)
-    return false
+            return false
         }
         
     }) //add token in localStorage
-      
-   
 }
-function doSome(data){someResult=data}
+
 function saveToken(token) {
     localStorage.setItem('tokenData', JSON.stringify(token));
 }
 
-function validator(email, password) {
-    let regexp = /^........*$/i // /[\w|\d]+|\d+
-    //let regexp = /^\w+@flo.team$/
-    if (regexp.test(email) && regexp.test(password)) {
-        return true
+async function control_validation_authorization() {
+    let validationResult = null
+    let authorizationResult = null
+    let userPassword = document.getElementById('pass').value
+    let userEmail = document.getElementById('email').value
+    let regexp = /^........*$/i
+    
+    if (regexp.test(userEmail) && regexp.test(userPassword)) {
+        validationResult = true
+        authorizationResult = await authorization(userEmail, userPassword)
     } else {
-        return false
+        alert('некорректные данные')
     }
     
+    return validationResult && authorizationResult
 }
 
 function removeToken() {
-    let authForm = document.getElementById('form')
-    let divGallery = document.getElementById('gallery')
-    authForm.classList.add('visible')
     localStorage.removeItem('tokenData')
+}
+
+function remove_gallery() {
+    let divGallery = document.getElementById('gallery')
     
     while (divGallery.firstChild) {
         divGallery.removeChild(divGallery.firstChild);
     }
+}
+
+function show_auth_form() {
+    let authForm = document.getElementById('form')
+    
+    authForm.classList.add('visible')
+}
+
+function hidden_auth_form() {
+    let authForm = document.getElementById('form')
+    
+    authForm.classList.add('hidden')
+}
+
+function get_gallery() {
+    let script = document.createElement('script')
+    
+    script.src = "gallery/get_gallery.js"
+    document.getElementsByTagName('head')[0].appendChild(script);
+}
+
+function reset_authorization() {
+    removeToken()
+    remove_gallery()
+    show_auth_form()
 }
 
