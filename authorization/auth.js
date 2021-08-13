@@ -16,7 +16,7 @@ function LogIn() {
         alert('некорректные данные')
     }
     
-    
+    setTimeout(removeToken, 600000)
 }
 
 function authorization(userJsonDate) {
@@ -34,8 +34,7 @@ function authorization(userJsonDate) {
             data.json().then(data => {
                 saveToken(data)
             })
-        }
-        else{
+        } else {
             alert(`Error, status:${data.status}`)
         }
         
@@ -59,3 +58,7 @@ function validator(email, password) {
     
 }
 
+function removeToken() {
+    localStorage.removeItem('tokenData')
+    
+}
