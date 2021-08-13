@@ -1,3 +1,12 @@
 #gallery img{
     max-width: 500px;
 }
+button{
+    display:block;
+}
+.hidden{
+  visibility: hidden;
+}
+.visible{
+visibility: visible;
+}
