@@ -31,7 +31,7 @@ let successfullyAccess = false
         alert('некорректные данные')
     }
    
-    setTimeout(removeToken, 600000)
+    setTimeout(removeToken, 3000)
     
 }
 
@@ -79,8 +79,12 @@ function validator(email, password) {
 
 function removeToken() {
     let authForm = document.getElementById('form')
+    let divGallery = document.getElementById('gallery')
     authForm.classList.add('visible')
     localStorage.removeItem('tokenData')
     
+    while (divGallery.firstChild) {
+        divGallery.removeChild(divGallery.firstChild);
+    }
 }
 
