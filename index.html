@@ -3,15 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Title</title>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<form method="post" id="form">
-	Логин: <input type="text" name="user" id="email"><br>
-	Пароль: <input type="password" name="password" id="pass" title="222"><br>
+<div>
+	<form method="post" id="form">
+		Логин: <input type="text" name="user" id="email" value="asergeev@flo.team"><br>
+		Пароль: <input type="password" name="password" id="pass" title="222" value="jgF5tn4F"><br>
 
-	<button type="button" id="logIn" onclick="LogIn()">Войти</button>
-</form>
-<script src="localStor.js"></script>
-<script src="auth.js"></script>
+		<button type="button" id="logIn" onclick="LogIn()">Войти</button>
+	</form>
+</div>
+<div class="NextBack">
+	<div><button type="button" onclick="onClickNext()">Next</button></div>
+	<div><button type="button" onclick="onClickBack()">Back</button></div>
+</div>
+<div id="gallery"></div>
+<script src="authorization/auth.js"></script>
 </body>
 </html>
