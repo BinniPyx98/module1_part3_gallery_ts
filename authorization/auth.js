@@ -4,9 +4,10 @@ async function LogIn() {
     if (result) {
         hidden_auth_form()
         get_gallery()
+        setTimeout(reset_gallery, 100000)
+    
     }
     
-    setTimeout(reset_authorization, 3000)
 }
 
 function authorization(userEmail, userPassword) {
@@ -25,7 +26,7 @@ function authorization(userEmail, userPassword) {
     return response.then(data => {
         if (data.status === 200) {
             return data.json().then(data => {
-                saveToken(data)
+                save_token(data)
                 return true
             })
         } else {
@@ -36,7 +37,7 @@ function authorization(userEmail, userPassword) {
     }) //add token in localStorage
 }
 
-function saveToken(token) {
+function save_token(token) {
     localStorage.setItem('tokenData', JSON.stringify(token));
 }
 
@@ -69,16 +70,9 @@ function remove_gallery() {
     }
 }
 
-function show_auth_form() {
-    let authForm = document.getElementById('form')
-    
-    authForm.classList.add('visible')
-}
-
 function hidden_auth_form() {
     let authForm = document.getElementById('form')
-    
-    authForm.classList.add('hidden')
+    authForm.classList.toggle('hidden')
 }
 
 function get_gallery() {
@@ -88,9 +82,9 @@ function get_gallery() {
     document.getElementsByTagName('head')[0].appendChild(script);
 }
 
-function reset_authorization() {
+function reset_gallery() {
     removeToken()
     remove_gallery()
-    show_auth_form()
+    hidden_auth_form()
 }
 

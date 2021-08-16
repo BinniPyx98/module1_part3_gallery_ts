@@ -1,25 +1,21 @@
-let page = null
-localStorage.getItem('page') ? page = localStorage.getItem('page') : page = 1
-let url = `https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/gallery?page=${page}`
+let serverPages=null
 
 function get_page() {
-    localStorage.getItem('page') ? page = localStorage.getItem('page') : page = 1
-    return page
+   
+    return localStorage.getItem('page') ? localStorage.getItem('page') : 1
 }
 
 function set_page(num) {
     
     localStorage.setItem('page', num)
-    page = num
-    url = `https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/gallery?page=${page}`
-    
+}
+function get_url(){
+    return `https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/gallery?page=${get_page()}`
 }
 
-
 async function get_gallery() {
-    let token = localStorage.getItem('tokenData')
-    token = JSON.parse(token)
-    let result = fetch(url, {
+    let token = JSON.parse(localStorage.getItem('tokenData'))
+    let resolve = fetch(get_url(), {
         method: "GET",
         headers: {
             'Authorization': token.token
@@ -27,46 +23,57 @@ async function get_gallery() {
     })
     let galleryObject = null
     
-    await result.then(data => data.json().then(data => galleryObject = data))
+    await resolve.then(data => data.json().then(data => {
+        galleryObject = data
+        serverPages=galleryObject.total
+    }))
     
-    
-    create_img_elements()
-    
-    function create_img_elements() {
-        let divGallery = document.getElementById('gallery')
-        
-        while (divGallery.firstChild) {
-            divGallery.removeChild(divGallery.firstChild);
-        }
-        
-        
-        for (let url of galleryObject.objects) {
-            let img = document.createElement('img')
-            img.src = url
-            divGallery.appendChild(img)
-            
-        }
-        
-    }
-    
+    create_gallery(galleryObject)
 }
+
+function create_gallery(galleryObject) {
+    clear_gallery()
+    create_img(galleryObject)
+}
+
+
+function clear_gallery(){
+    let divGallery = document.getElementById('gallery')
+    
+    while (divGallery.firstChild) {
+        divGallery.removeChild(divGallery.firstChild);
+    }
+}
+function create_img(galleryObject){
+    let divGallery = document.getElementById('gallery')
+    for (let url of galleryObject.objects) {
+        let img = document.createElement('img')
+        img.src = url
+        divGallery.appendChild(img)
+    }
+}
+
+
+
 
 function onClickNext() {
-    let page1 = Number(get_page())
-    if (page >= 5) {
+    let page = Number(get_page())
+    if (page >= serverPages) {
         set_page(5)
+        alert("It's last page")
     } else {
-        set_page(page1 + 1)
+        set_page(page + 1)
         get_gallery()
     }
+   // window.location.search+='page=2'
 }
-
 function onClickBack() {
-    let page1 = Number(get_page())
+    let page = Number(get_page())
     if (page == 1) {
+        alert("It's first page")
         set_page(1)
     } else {
-        set_page(page1 - 1)
+        set_page(page - 1)
         get_gallery()
     }
 }
