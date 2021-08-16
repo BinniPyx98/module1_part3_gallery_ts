@@ -4,7 +4,7 @@ async function LogIn() {
     if (result) {
         hidden_auth_form()
         get_gallery()
-        setTimeout(reset_gallery, 100000)
+        setTimeout(reset_gallery, 60000)
     
     }
     

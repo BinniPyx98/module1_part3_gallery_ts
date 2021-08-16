@@ -36,7 +36,6 @@ function create_gallery(galleryObject) {
     create_img(galleryObject)
 }
 
-
 function clear_gallery(){
     let divGallery = document.getElementById('gallery')
     
@@ -53,29 +52,38 @@ function create_img(galleryObject){
     }
 }
 
-
-
-
 function onClickNext() {
     let page = Number(get_page())
     if (page >= serverPages) {
         set_page(5)
+        updateURL(page)
         alert("It's last page")
     } else {
+       updateURL(page+1)
         set_page(page + 1)
         get_gallery()
     }
-   // window.location.search+='page=2'
+    
+    
+    
+    
+
 }
 function onClickBack() {
     let page = Number(get_page())
     if (page == 1) {
-        alert("It's first page")
+        updateURL(page)
         set_page(1)
+        alert("It's first page")
+    
+    
     } else {
+        updateURL(page-1)
         set_page(page - 1)
         get_gallery()
     }
 }
-
+function updateURL(page){
+    window.history.pushState(window.location.href, null, `gallery?page=${page}`);
+}
 get_gallery()
