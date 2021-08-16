@@ -46,9 +46,9 @@ async function control_validation_authorization() {
     let authorizationResult = null
     let userPassword = document.getElementById('pass').value
     let userEmail = document.getElementById('email').value
-    let regexp = /^........*$/i
-    
-    if (regexp.test(userEmail) && regexp.test(userPassword)) {
+    let regexp = /^.+@.+\..+$/igm
+    let regexpPass=/^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,}$/
+    if (regexp.test(userEmail) && regexpPass.test(userPassword)) {
         validationResult = true
         authorizationResult = await authorization(userEmail, userPassword)
     } else {

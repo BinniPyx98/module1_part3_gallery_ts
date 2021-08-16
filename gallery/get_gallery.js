@@ -1,4 +1,4 @@
-let serverPages=null
+let serverPages=null //содержит кол-во страниц галлереи полученных с сервера
 
 function get_page() {
    

@@ -22,3 +22,20 @@ reset_gallery удаляет токен, выполняет функцию remov
  <h4>Алгоритм работы get_gallery.js</h4>
  <p style="text-indent: 25px;">Скрипт реагирует на успешную авторизацию и нажатие кнопок Next и Back (данные элементы отвечают за перемещение пользователя между страницами галлереи) 
 Функция get_gallery получает токен из localStorage ,посылает GET запрос, запускает функцию create_gallery
+create_gallery очищает галлерею(function clear_gallery), затем создает новые элементы (function create_img)
+</p>
+
+<h1>About project</h1>
+<hr/>
+Структура проекта:
+<ul>
+<li>authorization
+<ul><li>auth.js</li></ul></li>
+<li>css
+<ul><li>style.css</li></ul></li>
+<li>gallery
+<ul><li>get_gallery.js</li></ul></li>
+<li>index.html</li>
+<li>.gitignore</li>
+<li>README.md</li>
+</ul>
