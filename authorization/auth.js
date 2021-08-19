@@ -24,13 +24,15 @@ function authorization(userEmail, userPassword) {
     })
     
     return response.then(data => {
+  
         if (data.status === 200) {
             return data.json().then(data => {
                 save_token(data)
                 return true
             })
         } else {
-            alert(`Error, status:${data.status}`)
+            data.json().then(data => {
+               server_error(data)})
             return false
         }
         
@@ -39,6 +41,10 @@ function authorization(userEmail, userPassword) {
 
 function save_token(token) {
     localStorage.setItem('tokenData', JSON.stringify(token));
+}
+
+function server_error(error){
+    alert(error.errorMessage)
 }
 
 async function control_validation_authorization() {
