@@ -1,10 +1,10 @@
 async function LogIn() {
-    let result = await control_validation_authorization()
+    let result = await control_validation_authorization();
 
     if (result) {
-        hidden_auth_form()
-        get_gallery()
-        setTimeout(reset_gallery, 60000)
+        hidden_auth_form();
+        get_gallery();
+        setTimeout(reset_gallery, 60000);
 
     }
 
@@ -27,14 +27,14 @@ function authorization(userEmail:string, userPassword:string) {
 
         if (data.status === 200) {
             return data.json().then(data => {
-                save_token(data)
-                return true
+                save_token(data);
+                return true;
             })
         } else {
             data.json().then(data => {
-                server_error(data)
+                server_error(data);
             })
-            return false
+            return false;
         }
 
     }) //add token in localStorage
@@ -45,26 +45,26 @@ function save_token(token:string) {
 }
 
 function server_error(error) {
-    alert(error.errorMessage)
+    alert(error.errorMessage);
 }
 
 function getElement(tagId: string) {
-    let Element = <HTMLInputElement>document.getElementById(tagId)
-    return Element ? Element.value : alert("don't find tag")
+    let Element = <HTMLInputElement>document.getElementById(tagId);
+    return Element ? Element.value : alert("don't find tag");
 }
 
 async function control_validation_authorization() {
-    let validationResult = null
-    let authorizationResult = null
-    let regexp = /^.+@.+\..+$/igm
-    let regexpPass = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,}$/
-    let userPassword = getElement('pass')
-    let userEmail = getElement('email')
+    let validationResult = null;
+    let authorizationResult = null;
+    let regexp = /^.+@.+\..+$/igm;
+    let regexpPass = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,}$/;
+    let userPassword = getElement('pass');
+    let userEmail = getElement('email');
 
     if (userPassword && userEmail) {
         if (regexp.test(userEmail) && regexpPass.test(userPassword)) {
-            validationResult = true
-            authorizationResult = await authorization(userEmail, userPassword)
+            validationResult = true;
+            authorizationResult = await authorization(userEmail, userPassword);
         } else {
             alert('некорректные данные')
         }
@@ -73,11 +73,11 @@ async function control_validation_authorization() {
 }
 
 function removeToken() {
-    localStorage.removeItem('tokenData')
+    localStorage.removeItem('tokenData');
 }
 
 function remove_gallery() {
-    let divGallery = document.getElementById('gallery')
+    let divGallery = document.getElementById('gallery');
 
     while (divGallery.firstChild) {
         divGallery.removeChild(divGallery.firstChild);
@@ -85,20 +85,20 @@ function remove_gallery() {
 }
 
 function hidden_auth_form() {
-    let authForm = document.getElementById('form')
-    authForm.classList.toggle('hidden')
+    let authForm = document.getElementById('form');
+    authForm.classList.toggle('hidden');
 }
 
 function get_gallery() {
-    let script = document.createElement('script')
+    let script = document.createElement('script');
 
-    script.src = "gallery/get_gallery.js"
+    script.src = "gallery/get_gallery.js";
     document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 function reset_gallery() {
-    removeToken()
-    remove_gallery()
-    hidden_auth_form()
+    removeToken();
+    remove_gallery();
+    hidden_auth_form();
 }
 
