@@ -21,12 +21,15 @@ async function getGallery() {
             'Authorization': token.token
         }
     })
-    let galleryObject = null;
 
-    await resolve.then(data => data.json().then(data => {
+    let galleryObject = null;
+    let response = await resolve;
+    let data = await response.json();
+
+    if (data) {
         galleryObject = data;
-        serverPages = galleryObject.total;
-    }))
+        serverPages = data.total;
+    }
 
     createGallery(galleryObject);
 }
@@ -37,7 +40,7 @@ interface gallery {
     page: number;
 }
 
-function createGallery(galleryObject:gallery) {
+function createGallery(galleryObject: gallery) {
     clearGallery();
     createImg(galleryObject);
 }
@@ -50,7 +53,7 @@ function clearGallery() {
     }
 }
 
-function createImg(galleryObject:gallery) {
+function createImg(galleryObject: gallery) {
     let divGallery = document.getElementById('gallery');
     for (let url of galleryObject.objects) {
         let img = document.createElement('img');
@@ -76,7 +79,7 @@ function onClickNext() {
 
 function onClickBack() {
     let page = Number(getPage());
-    if (page == 1) {
+    if (page === 1) {
         updateURL(page);
         setPage(1);
         alert("It's first page");

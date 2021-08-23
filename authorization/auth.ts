@@ -22,7 +22,6 @@ function authorization(userEmail:string, userPassword:string) {
         },
         body: userJsonDate
     })
-
     return response.then(data => {
 
         if (data.status === 200) {

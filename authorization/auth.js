@@ -97,4 +97,4 @@ function reset_gallery() {
     remove_gallery();
     hidden_auth_form();
 }
-//# sourceMappingURL=authts.js.map
+//# sourceMappingURL=auth.js.map

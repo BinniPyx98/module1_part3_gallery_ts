@@ -27,10 +27,12 @@ function getGallery() {
             }
         });
         let galleryObject = null;
-        yield resolve.then(data => data.json().then(data => {
+        let response = yield resolve;
+        let data = yield response.json();
+        if (data) {
             galleryObject = data;
-            serverPages = galleryObject.total;
-        }));
+            serverPages = data.total;
+        }
         createGallery(galleryObject);
     });
 }
@@ -67,7 +69,7 @@ function onClickNext() {
 }
 function onClickBack() {
     let page = Number(getPage());
-    if (page == 1) {
+    if (page === 1) {
         updateURL(page);
         setPage(1);
         alert("It's first page");

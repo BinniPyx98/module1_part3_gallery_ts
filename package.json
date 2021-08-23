@@ -1,7 +1,9 @@
 {
   "name": "module1_part3_gallery",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "typescript": "^4.3.5"
+  },
   "scripts": {
     "buildTS": "tsc --project tsconfig.json"
   },
