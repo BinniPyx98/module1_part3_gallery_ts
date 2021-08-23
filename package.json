@@ -1,0 +1,12 @@
+{
+  "name": "module1_part3_gallery",
+  "version": "1.0.0",
+  "dependencies": {},
+  "scripts": {
+    "buildTS": "tsc --project tsconfig.json"
+  },
+  "main": "auth.js",
+  "repository": "git@github.com:BinniPyx98/module1_part3_gallery.git",
+  "author": "Kalinichenko <aleks.kalinichenko989@gmail.com>",
+  "license": "MIT"
+}
