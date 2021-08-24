@@ -57,13 +57,13 @@ function createImg(galleryObject) {
 function onClickNext() {
     let page = Number(getPage());
     if (page >= serverPages) {
-        setPage(5);
+        setPage(String(5));
         updateURL(page);
         alert("It's last page");
     }
     else {
         updateURL(page + 1);
-        setPage(page + 1);
+        setPage(String(page + 1));
         getGallery();
     }
 }
@@ -71,12 +71,12 @@ function onClickBack() {
     let page = Number(getPage());
     if (page === 1) {
         updateURL(page);
-        setPage(1);
+        setPage(String(1));
         alert("It's first page");
     }
     else {
         updateURL(page - 1);
-        setPage(page - 1);
+        setPage(String(page - 1));
         getGallery();
     }
 }

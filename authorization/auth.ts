@@ -43,7 +43,7 @@ function save_token(token:string) {
     localStorage.setItem('tokenData', JSON.stringify(token));
 }
 
-function server_error(error) {
+function server_error(error:any) {
     alert(error.errorMessage);
 }
 

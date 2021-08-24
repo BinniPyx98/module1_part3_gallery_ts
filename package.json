@@ -2,12 +2,14 @@
   "name": "module1_part3_gallery",
   "version": "1.0.0",
   "dependencies": {
+    "nodemon": "^2.0.12",
+    "tslint-language-service": "^0.9.9",
     "typescript": "^4.3.5"
   },
   "scripts": {
     "buildTS": "tsc --project tsconfig.json"
   },
-  "main": "auth.js",
+  "main": "gallery/get_gallery.ts",
   "repository": "git@github.com:BinniPyx98/module1_part3_gallery.git",
   "author": "Kalinichenko <aleks.kalinichenko989@gmail.com>",
   "license": "MIT"

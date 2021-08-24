@@ -1,13 +1,14 @@
-let serverPages = null //содержит кол-во страниц галлереи полученных с сервера
+let serverPages:number = null //содержит кол-во страниц галлереи полученных с сервера
 
 function getPage() {
 
     return localStorage.getItem('page') ? localStorage.getItem('page') : 1;
 }
 
-function setPage(num) {
+function setPage(num:string) {
     localStorage.setItem('page', num);
 }
+
 
 function getUrl() {
     return `https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/gallery?page=${getPage()}`;
@@ -65,12 +66,12 @@ function createImg(galleryObject: gallery) {
 function onClickNext() {
     let page = Number(getPage());
     if (page >= serverPages) {
-        setPage(5);
+        setPage(String(5));
         updateURL(page);
         alert("It's last page");
     } else {
         updateURL(page + 1);
-        setPage(page + 1);
+        setPage(String(page + 1));
         getGallery();
     }
 
@@ -81,18 +82,18 @@ function onClickBack() {
     let page = Number(getPage());
     if (page === 1) {
         updateURL(page);
-        setPage(1);
+        setPage(String(1));
         alert("It's first page");
 
 
     } else {
         updateURL(page - 1);
-        setPage(page - 1);
+        setPage(String(page - 1));
         getGallery();
     }
 }
 
-function updateURL(page) {
+function updateURL(page:number) {
     window.history.pushState(window.location.href, null, `gallery?page=${page}`);
 }
 
