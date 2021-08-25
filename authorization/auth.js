@@ -7,20 +7,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { getGallery } from "../gallery/get_gallery.js";
+let test = document.getElementById('logIn');
+if (test) {
+    test.addEventListener('click', ev => {
+        ev.preventDefault();
+        LogIn();
+    });
+}
 // LogIn является точкой входа
 function LogIn() {
     return __awaiter(this, void 0, void 0, function* () {
         let result = yield control_validation_authorization();
         if (result) {
             hidden_auth_form();
-            yield get_gallery();
+            getGallery();
             setTimeout(reset_gallery, 60000);
         }
     });
 }
-let a = {
-    v: 2
-};
 function authorization(userEmail, userPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         let userJsonDate = JSON.stringify({
@@ -89,12 +94,6 @@ function remove_gallery() {
 function hidden_auth_form() {
     let authForm = document.getElementById('form');
     authForm.classList.toggle('hidden');
-}
-function get_gallery() {
-    //Изменить реализацию функции на данный момент невозможно
-    let script = document.createElement('script');
-    script.src = "gallery/get_gallery.js";
-    document.getElementsByTagName('head')[0].appendChild(script);
 }
 function reset_gallery() {
     removeToken();

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 //getGallery main function in file
-function getGallery() {
+export function getGallery() {
     return __awaiter(this, void 0, void 0, function* () {
         let token = JSON.parse(localStorage.getItem('tokenData'));
         let resolve = fetch(getUrl(), {
@@ -53,36 +53,43 @@ function createImg(galleryObject) {
         divGallery.appendChild(img);
     }
 }
-function onClickNext() {
-    let page = Number(getPage());
-    if (page >= 5) {
-        setPage(String(5));
-        updateURL(page);
-        alert("It's last page");
-    }
-    else {
-        updateURL(page + 1);
-        setPage(String(page + 1));
-        (() => getGallery())();
-    }
+//Отслеживаем нажатие на кнопку next
+let clickButtonNext = document.getElementById('next');
+if (clickButtonNext) {
+    clickButtonNext.addEventListener('click', ev => {
+        ev.preventDefault();
+        let page = Number(getPage());
+        if (page >= 5) {
+            setPage(String(5));
+            updateURL(page);
+            alert("It's last page");
+        }
+        else {
+            updateURL(page + 1);
+            setPage(String(page + 1));
+            (() => getGallery())();
+        }
+    });
 }
-function onClickBack() {
-    let page = Number(getPage());
-    if (page === 1) {
-        updateURL(page);
-        setPage(String(1));
-        alert("It's first page");
-    }
-    else {
-        updateURL(page - 1);
-        setPage(String(page - 1));
-        (() => getGallery())();
-    }
+//Отслеживаем нажатие на кнопку back
+let clickButtonBack = document.getElementById('back');
+if (clickButtonBack) {
+    clickButtonBack.addEventListener('click', ev => {
+        ev.preventDefault();
+        let page = Number(getPage());
+        if (page === 1) {
+            updateURL(page);
+            setPage(String(1));
+            alert("It's first page");
+        }
+        else {
+            updateURL(page - 1);
+            setPage(String(page - 1));
+            (() => getGallery())();
+        }
+    });
 }
 function updateURL(page) {
     window.history.pushState(window.location.href, null, `gallery?page=${page}`);
 }
-//Вызов не удалять. Нужен для запуска кода в данном файл, так как
-// встраивается в html через document.createElement в файле auth.js
-(() => getGallery())();
 //# sourceMappingURL=get_gallery.js.map
