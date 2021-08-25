@@ -1,5 +1,5 @@
 //getGallery main function in file
-async function getGallery(): Promise<void> {
+export async function getGallery(): Promise<void> {
     let token = JSON.parse(localStorage.getItem('tokenData'));
     let resolve = fetch(getUrl(), {
         method: "GET",
@@ -61,39 +61,46 @@ function createImg(galleryObject: gallery): void {
     }
 }
 
-function onClickNext(): void {
-    let page:number = Number(getPage());
+let clickButtonNext = document.getElementById('next')
+if (clickButtonNext) {
+    clickButtonNext.addEventListener('click', ev => {
+        ev.preventDefault()
+        let page: number = Number(getPage());
 
-    if (page >= 5) {
-        setPage(String(5));
-        updateURL(page);
-        alert("It's last page");
-    } else {
-        updateURL(page + 1);
-        setPage(String(page + 1));
-        (() => getGallery())()
-    }
+        if (page >= 5) {
+            setPage(String(5));
+            updateURL(page);
+            alert("It's last page");
+        } else {
+            updateURL(page + 1);
+            setPage(String(page + 1));
+            (() => getGallery())()
+        }
+    })
+
 }
 
-function onClickBack(): void {
-    let page:number = Number(getPage());
+//Отслеживаем нажатие на кнопку back
+let clickButtonBack = document.getElementById('back')
+if (clickButtonBack) {
+    clickButtonBack.addEventListener('click', ev => {
+        ev.preventDefault()
+        let page: number = Number(getPage());
 
-    if (page === 1) {
-        updateURL(page);
-        setPage(String(1));
-        alert("It's first page");
-    } else {
-        updateURL(page - 1);
-        setPage(String(page - 1));
-        (() => getGallery())()
-    }
+        if (page === 1) {
+            updateURL(page);
+            setPage(String(1));
+            alert("It's first page");
+        } else {
+            updateURL(page - 1);
+            setPage(String(page - 1));
+            (() => getGallery())()
+        }
+    })
 }
 
 function updateURL(page: number): void {
     window.history.pushState(window.location.href, null, `gallery?page=${page}`);
 }
 
-//Вызов не удалять. Нужен для запуска кода в данном файл, так как
-// встраивается в html через document.createElement в файле auth.js
-(() => getGallery())()
 
