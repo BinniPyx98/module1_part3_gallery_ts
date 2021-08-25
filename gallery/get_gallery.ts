@@ -39,23 +39,13 @@ interface gallery {
     page: number;
 }
 
-interface A{
-    [name: string]: string;
-    [age: number]: string;
-}
-
-// let a:A={
-//     name:'Any',
-//     age:1
-// }
-
 function createGallery(galleryObject: gallery): void {
     clearGallery();
     createImg(galleryObject);
 }
 
 function clearGallery(): void {
-    let divGallery = document.getElementById('gallery');
+    let divGallery: HTMLElement = document.getElementById('gallery');
 
     while (divGallery.firstChild) {
         divGallery.removeChild(divGallery.firstChild);
@@ -63,16 +53,16 @@ function clearGallery(): void {
 }
 
 function createImg(galleryObject: gallery): void {
-    let divGallery = document.getElementById('gallery');
+    let divGallery: HTMLElement = document.getElementById('gallery');
     for (let url of galleryObject.objects) {
-        let img = document.createElement('img');
+        let img: HTMLImageElement = document.createElement('img');
         img.src = url;
         divGallery.appendChild(img);
     }
 }
 
 function onClickNext(): void {
-    let page = Number(getPage());
+    let page:number = Number(getPage());
 
     if (page >= 5) {
         setPage(String(5));
@@ -86,7 +76,7 @@ function onClickNext(): void {
 }
 
 function onClickBack(): void {
-    let page = Number(getPage());
+    let page:number = Number(getPage());
 
     if (page === 1) {
         updateURL(page);

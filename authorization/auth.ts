@@ -94,6 +94,7 @@ function hidden_auth_form(): void {
 }
 
 function get_gallery(): void {
+    //Изменить реализацию функции на данный момент не возможно
     let script:HTMLScriptElement = document.createElement('script');
     script.src = "gallery/get_gallery.js";
     document.getElementsByTagName('head')[0].appendChild(script);
