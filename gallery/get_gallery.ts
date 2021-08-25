@@ -39,6 +39,16 @@ interface gallery {
     page: number;
 }
 
+interface A{
+    [name: string]: string;
+    [age: number]: string;
+}
+
+// let a:A={
+//     name:'Any',
+//     age:1
+// }
+
 function createGallery(galleryObject: gallery): void {
     clearGallery();
     createImg(galleryObject);
@@ -54,7 +64,6 @@ function clearGallery(): void {
 
 function createImg(galleryObject: gallery): void {
     let divGallery = document.getElementById('gallery');
-
     for (let url of galleryObject.objects) {
         let img = document.createElement('img');
         img.src = url;
@@ -97,3 +106,4 @@ function updateURL(page: number): void {
 //Вызов не удалять. Нужен для запуска кода в данном файл, так как
 // встраивается в html через document.createElement в файле auth.js
 (() => getGallery())()
+

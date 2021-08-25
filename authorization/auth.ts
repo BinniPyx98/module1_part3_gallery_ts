@@ -1,7 +1,7 @@
 // LogIn является точкой входа
-async function LogIn():Promise<void> {
+async function LogIn(): Promise<void> {
 
-    let result = await control_validation_authorization();
+    let result: boolean = await control_validation_authorization();
 
     if (result) {
         hidden_auth_form();
@@ -10,8 +10,17 @@ async function LogIn():Promise<void> {
     }
 }
 
-async function authorization(userEmail: string, userPassword: string):Promise<boolean> {
-    let userJsonDate = JSON.stringify({
+interface A {
+    [key: string]: number;
+}
+
+let a: A = {
+    v: 2
+}
+
+async function authorization(userEmail: string, userPassword: string): Promise<boolean> {
+
+    let userJsonDate: string = JSON.stringify({
         email: userEmail,
         password: userPassword
     })
@@ -24,11 +33,11 @@ async function authorization(userEmail: string, userPassword: string):Promise<bo
     })
     let response = await resolve;
     if (response.status === 200) {
-        let result = await response.json();
+        let result: string = await response.json();
         save_token(result);
         return true
     } else {
-        let result = await response.json();
+        let result: string = await response.json();
         server_error(result)
         return false
     }
@@ -44,17 +53,17 @@ function server_error(error: any): void {
 }
 
 function getElement(tagId: string): string | void {
-    let Element = <HTMLInputElement>document.getElementById(tagId);
+    let Element: HTMLInputElement = <HTMLInputElement>document.getElementById(tagId);
     return Element ? Element.value : alert("don't find tag");
 }
 
-async function control_validation_authorization():Promise<boolean> {
-    let validationResult = null;
-    let authorizationResult = null;
-    let regexp = /^.+@.+\..+$/igm;
-    let regexpPass = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,}$/;
-    let userPassword = getElement('pass');
-    let userEmail = getElement('email');
+async function control_validation_authorization(): Promise<boolean> {
+    let validationResult: boolean = null;
+    let authorizationResult: boolean = null;
+    let regexp: RegExp = /^.+@.+\..+$/igm;
+    let regexpPass: RegExp = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,}$/;
+    let userPassword: string | void = getElement('pass');
+    let userEmail: string | void = getElement('email');
 
     if (userPassword && userEmail) {
         if (regexp.test(userEmail) && regexpPass.test(userPassword)) {
@@ -72,7 +81,7 @@ function removeToken(): void {
 }
 
 function remove_gallery(): void {
-    let divGallery = document.getElementById('gallery');
+    let divGallery: HTMLElement = document.getElementById('gallery');
 
     while (divGallery.firstChild) {
         divGallery.removeChild(divGallery.firstChild);
@@ -80,12 +89,12 @@ function remove_gallery(): void {
 }
 
 function hidden_auth_form(): void {
-    let authForm = document.getElementById('form');
+    let authForm:HTMLElement = document.getElementById('form');
     authForm.classList.toggle('hidden');
 }
 
 function get_gallery(): void {
-    let script = document.createElement('script');
+    let script:HTMLScriptElement = document.createElement('script');
     script.src = "gallery/get_gallery.js";
     document.getElementsByTagName('head')[0].appendChild(script);
 }

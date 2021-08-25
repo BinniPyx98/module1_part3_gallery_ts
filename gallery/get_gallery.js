@@ -35,6 +35,10 @@ function setPage(num) {
 function getUrl() {
     return `https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/gallery?page=${getPage()}`;
 }
+// let a:A={
+//     name:'Any',
+//     age:1
+// }
 function createGallery(galleryObject) {
     clearGallery();
     createImg(galleryObject);

@@ -18,6 +18,9 @@ function LogIn() {
         }
     });
 }
+let a = {
+    v: 2
+};
 function authorization(userEmail, userPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         let userJsonDate = JSON.stringify({
