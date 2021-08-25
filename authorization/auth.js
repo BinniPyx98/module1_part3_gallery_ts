@@ -91,7 +91,7 @@ function hidden_auth_form() {
     authForm.classList.toggle('hidden');
 }
 function get_gallery() {
-    //Изменить реализацию функции на данный момент не возможно
+    //Изменить реализацию функции на данный момент невозможно
     let script = document.createElement('script');
     script.src = "gallery/get_gallery.js";
     document.getElementsByTagName('head')[0].appendChild(script);
