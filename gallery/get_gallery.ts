@@ -1,20 +1,5 @@
-let serverPages:number = null //содержит кол-во страниц галлереи полученных с сервера
-
-function getPage() {
-
-    return localStorage.getItem('page') ? localStorage.getItem('page') : 1;
-}
-
-function setPage(num:string) {
-    localStorage.setItem('page', num);
-}
-
-
-function getUrl() {
-    return `https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/gallery?page=${getPage()}`;
-}
-
-async function getGallery() {
+//getGallery main function in file
+async function getGallery(): Promise<void> {
     let token = JSON.parse(localStorage.getItem('tokenData'));
     let resolve = fetch(getUrl(), {
         method: "GET",
@@ -29,11 +14,24 @@ async function getGallery() {
 
     if (data) {
         galleryObject = data;
-        serverPages = data.total;
     }
 
-    createGallery(galleryObject);
+    await createGallery(galleryObject);
 }
+
+function getPage(): string | number {
+    return localStorage.getItem('page') ? localStorage.getItem('page') : 1;
+}
+
+function setPage(num: string): void {
+    localStorage.setItem('page', num);
+}
+
+
+function getUrl(): string {
+    return `https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/gallery?page=${getPage()}`;
+}
+
 
 interface gallery {
     objects: string[];
@@ -41,12 +39,12 @@ interface gallery {
     page: number;
 }
 
-function createGallery(galleryObject: gallery) {
+function createGallery(galleryObject: gallery): void {
     clearGallery();
     createImg(galleryObject);
 }
 
-function clearGallery() {
+function clearGallery(): void {
     let divGallery = document.getElementById('gallery');
 
     while (divGallery.firstChild) {
@@ -54,8 +52,9 @@ function clearGallery() {
     }
 }
 
-function createImg(galleryObject: gallery) {
+function createImg(galleryObject: gallery): void {
     let divGallery = document.getElementById('gallery');
+
     for (let url of galleryObject.objects) {
         let img = document.createElement('img');
         img.src = url;
@@ -63,38 +62,38 @@ function createImg(galleryObject: gallery) {
     }
 }
 
-function onClickNext() {
+function onClickNext(): void {
     let page = Number(getPage());
-    if (page >= serverPages) {
+
+    if (page >= 5) {
         setPage(String(5));
         updateURL(page);
         alert("It's last page");
     } else {
         updateURL(page + 1);
         setPage(String(page + 1));
-        getGallery();
+        (() => getGallery())()
     }
-
-
 }
 
-function onClickBack() {
+function onClickBack(): void {
     let page = Number(getPage());
+
     if (page === 1) {
         updateURL(page);
         setPage(String(1));
         alert("It's first page");
-
-
     } else {
         updateURL(page - 1);
         setPage(String(page - 1));
-        getGallery();
+        (() => getGallery())()
     }
 }
 
-function updateURL(page:number) {
+function updateURL(page: number): void {
     window.history.pushState(window.location.href, null, `gallery?page=${page}`);
 }
 
-getGallery()
+//Вызов не удалять. Нужен для запуска кода в данном файл, так как
+// встраивается в html через document.createElement в файле auth.js
+(() => getGallery())()

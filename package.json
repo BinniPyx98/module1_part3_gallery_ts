@@ -1,8 +1,11 @@
 {
   "name": "module1_part3_gallery",
   "version": "1.0.0",
+  "type": "commonjs",
   "dependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
     "nodemon": "^2.0.12",
+    "requirejs": "^2.3.6",
     "tslint-language-service": "^0.9.9",
     "typescript": "^4.3.5"
   },
@@ -12,5 +15,12 @@
   "main": "gallery/get_gallery.ts",
   "repository": "git@github.com:BinniPyx98/module1_part3_gallery.git",
   "author": "Kalinichenko <aleks.kalinichenko989@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
+    "@types/node": "^16.7.1"
+  }
 }

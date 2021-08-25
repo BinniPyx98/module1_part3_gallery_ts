@@ -7,16 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-let serverPages = null; //содержит кол-во страниц галлереи полученных с сервера
-function getPage() {
-    return localStorage.getItem('page') ? localStorage.getItem('page') : 1;
-}
-function setPage(num) {
-    localStorage.setItem('page', num);
-}
-function getUrl() {
-    return `https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/gallery?page=${getPage()}`;
-}
+//getGallery main function in file
 function getGallery() {
     return __awaiter(this, void 0, void 0, function* () {
         let token = JSON.parse(localStorage.getItem('tokenData'));
@@ -31,10 +22,18 @@ function getGallery() {
         let data = yield response.json();
         if (data) {
             galleryObject = data;
-            serverPages = data.total;
         }
-        createGallery(galleryObject);
+        yield createGallery(galleryObject);
     });
+}
+function getPage() {
+    return localStorage.getItem('page') ? localStorage.getItem('page') : 1;
+}
+function setPage(num) {
+    localStorage.setItem('page', num);
+}
+function getUrl() {
+    return `https://glq7fjiy07.execute-api.us-east-1.amazonaws.com/api/gallery?page=${getPage()}`;
 }
 function createGallery(galleryObject) {
     clearGallery();
@@ -56,7 +55,7 @@ function createImg(galleryObject) {
 }
 function onClickNext() {
     let page = Number(getPage());
-    if (page >= serverPages) {
+    if (page >= 5) {
         setPage(String(5));
         updateURL(page);
         alert("It's last page");
@@ -64,7 +63,7 @@ function onClickNext() {
     else {
         updateURL(page + 1);
         setPage(String(page + 1));
-        getGallery();
+        (() => getGallery())();
     }
 }
 function onClickBack() {
@@ -77,11 +76,13 @@ function onClickBack() {
     else {
         updateURL(page - 1);
         setPage(String(page - 1));
-        getGallery();
+        (() => getGallery())();
     }
 }
 function updateURL(page) {
     window.history.pushState(window.location.href, null, `gallery?page=${page}`);
 }
-getGallery();
+//Вызов не удалять. Нужен для запуска кода в данном файл, так как
+// встраивается в html через document.createElement в файле auth.js
+(() => getGallery())();
 //# sourceMappingURL=get_gallery.js.map
