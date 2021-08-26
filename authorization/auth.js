@@ -8,14 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { getGallery } from "../gallery/get_gallery.js";
-let test = document.getElementById('logIn');
-if (test) {
-    test.addEventListener('click', ev => {
+//Ловит клик событие на кнопке LogIn и является точкой входа
+let clickOnButtonLogIn = document.getElementById('logIn');
+if (clickOnButtonLogIn) {
+    clickOnButtonLogIn.addEventListener('click', ev => {
         ev.preventDefault();
         LogIn();
     });
 }
-// LogIn является точкой входа
 function LogIn() {
     return __awaiter(this, void 0, void 0, function* () {
         let result = yield control_validation_authorization();

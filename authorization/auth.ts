@@ -1,15 +1,16 @@
 import {getGallery} from "../gallery/get_gallery.js";
 
-let test = document.getElementById('logIn')
 
-if (test) {
-    test.addEventListener('click', ev => {
+//Ловит клик событие на кнопке LogIn и является точкой входа
+let clickOnButtonLogIn:HTMLElement = document.getElementById('logIn')
+
+if (clickOnButtonLogIn) {
+    clickOnButtonLogIn.addEventListener('click', ev => {
         ev.preventDefault()
         LogIn()
     })
 }
 
-// LogIn является точкой входа
 async function LogIn(): Promise<void> {
 
     let result: boolean = await control_validation_authorization();
