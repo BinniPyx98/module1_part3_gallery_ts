@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { getGallery } from "../gallery/get_gallery.js";
-let test = document.getElementById('logIn');
-if (test) {
-    test.addEventListener('click', ev => {
+let clickOnButtonLogIn = document.getElementById('logIn');
+if (clickOnButtonLogIn) {
+    clickOnButtonLogIn.addEventListener('click', ev => {
         ev.preventDefault();
         LogIn();
     });

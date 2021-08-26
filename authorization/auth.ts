@@ -1,9 +1,9 @@
 import {getGallery} from "../gallery/get_gallery.js";
 
-let test = document.getElementById('logIn')
+let clickOnButtonLogIn:HTMLElement = document.getElementById('logIn')
 
-if (test) {
-    test.addEventListener('click', ev => {
+if (clickOnButtonLogIn) {
+    clickOnButtonLogIn.addEventListener('click', ev => {
         ev.preventDefault()
         LogIn()
     })
