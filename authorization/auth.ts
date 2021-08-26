@@ -1,5 +1,7 @@
 import {getGallery} from "../gallery/get_gallery.js";
 
+
+//Ловит клик событие на кнопке LogIn и является точкой входа
 let clickOnButtonLogIn:HTMLElement = document.getElementById('logIn')
 
 if (clickOnButtonLogIn) {
@@ -9,7 +11,6 @@ if (clickOnButtonLogIn) {
     })
 }
 
-// LogIn является точкой входа
 async function LogIn(): Promise<void> {
 
     let result: boolean = await control_validation_authorization();
