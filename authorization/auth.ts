@@ -1,3 +1,14 @@
+import {getGallery} from "../gallery/get_gallery.js";
+
+let test = document.getElementById('logIn')
+
+if (test) {
+    test.addEventListener('click', ev => {
+        ev.preventDefault()
+        LogIn()
+    })
+}
+
 // LogIn является точкой входа
 async function LogIn(): Promise<void> {
 
@@ -5,7 +16,7 @@ async function LogIn(): Promise<void> {
 
     if (result) {
         hidden_auth_form();
-        await get_gallery();
+        getGallery()
         setTimeout(reset_gallery, 60000);
     }
 }
@@ -34,7 +45,6 @@ async function authorization(userEmail: string, userPassword: string): Promise<b
         server_error(result)
         return false
     }
-
 }
 
 function save_token(token: string): void {
@@ -84,13 +94,6 @@ function remove_gallery(): void {
 function hidden_auth_form(): void {
     let authForm: HTMLElement = document.getElementById('form');
     authForm.classList.toggle('hidden');
-}
-
-function get_gallery(): void {
-    //Изменить реализацию функции на данный момент невозможно
-    let script: HTMLScriptElement = document.createElement('script');
-    script.src = "gallery/get_gallery.js";
-    document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 function reset_gallery(): void {
